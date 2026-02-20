@@ -130,11 +130,24 @@ def main():
         else:
             print(f"Lowest {args.neigs} eigenvalues:")
 
-        print(vals)
+        #print(vals)
 
     except Exception as e:
         print("Error:", e)
 
+    start = time.time()
+    vals = solve_eigen(args.N, args.potential, args.neigs)
+    end = time.time()
 
+    runtime = end - start
+
+    # Save eigenvalues
+    np.savetxt(f"eigs_N{args.N}.txt", vals)
+
+    # Append runtime info
+    with open("timing_results.txt", "a") as f:
+        f.write(f"N={args.N}, runtime={runtime:.6f} sec\n")
+
+    print(f"N={args.N} finished in {runtime:.4f} seconds")
 if __name__ == "__main__":
     main()
