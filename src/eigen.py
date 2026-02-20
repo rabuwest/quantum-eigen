@@ -137,11 +137,13 @@ def main():
         print("Error:", e)
 
     start = time.time()
-    vals = solve_eigen(args.N, args.potential, args.neigs)
+    vals = solve_eigen(args.N, args.potential, args.neigs)[0]
     end = time.time()
 
     runtime = end - start
 
+    vals = np.ravel(vals)
+                     
     # Save eigenvalues
     np.savetxt(f"eigs_N{args.N}.txt", vals)
 
